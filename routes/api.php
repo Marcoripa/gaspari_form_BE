@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// http://host:post/api/saveForm
+Route::post('/saveForm', [App\Http\Controllers\FormController::class, 'saveFormData']);
