@@ -9,9 +9,20 @@ class FormController extends Controller
 {
     public function saveFormData(Request $request) {
         Log::info('Saving form data into a json file');
-        $email = $request['email'];
+        $email = $request->email;
 
-        file_put_contents("personalData_$email.json", json_encode($request));
-        return 'DONE';
+        $userObj = (object)[];
+        $userObj->firstName = $request->firstName;
+        $userObj->lastName = $request->lastName;
+        $userObj->email = $request->email;
+        $userObj->country = $request->country;
+        $userObj->isLegalAge = $request->isLegalAge;
+        $userObj->password = $request->password;
+
+        file_put_contents("personalData_$email.json", json_encode($userObj));
+
+        return response()->json([
+            'message' => "A new user $request->firstName $request->lastName has been created."
+        ]);
     }
 }
